@@ -1,9 +1,11 @@
 package com.bannad927.examples;
 
+import cn.hutool.core.date.BetweenFormater;
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.NumberUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -21,7 +23,7 @@ public class DateUtilTest {
     public static void main(String[] args) {
         //1.Date、long、Calendar之间的相互转换
         //当前时间
-        Date date = DateUtil.date();
+      /*  Date date = DateUtil.date();
         log.info("date:{}", date);
         //当前时间
         Date date1 = DateUtil.date(Calendar.getInstance());
@@ -34,7 +36,7 @@ public class DateUtilTest {
         log.info("now:{}", now);
         //当前日期字符串，格式：yyyy-MM-dd
         String today = DateUtil.today();
-        log.info("today:{}", today);
+        log.info("today:{}", today);*/
 
         //2.字符串转日期
         /**DateUtil.parse方法会自动识别一些常用格式，包括：
@@ -111,20 +113,22 @@ public class DateUtilTest {
         log.info("nextMonth:{}", nextMonth);*/
 
         //7.日期时间差
-        /*String dateStr1 = "2020-01-09 14:00:01";
+        String dateStr1 = "2020-06-09 01:30:00";
         Date date1 = DateUtil.parse(dateStr1);
-        String dateStr2 = "2020-06-10 14:00:01";
+        String dateStr2 = "2020-06-10 00:10:00";
         Date date2 = DateUtil.parse(dateStr2);
         long betweenDay = DateUtil.between(date1, date2, DateUnit.DAY);
         log.info("betweenDay:{}", betweenDay);
         long betweenHour = DateUtil.between(date1, date2, DateUnit.HOUR);
         log.info("betweenHour:{}", betweenHour);
 
-        long between = DateUtil.between(DateUtil.date(), date1, DateUnit.MINUTE);
-        log.info("between:{}", between);
-        //Level.MINUTE表示精确到分
-        String formatBetween = DateUtil.formatBetween(between, BetweenFormater.Level.MINUTE);
-        log.info("formatBetween:{}", formatBetween);*/
+        long between = DateUtil.between(date1, date2, DateUnit.MINUTE);
+        log.info("betweenMINUTE:{}", between);
+        double minute = 60;
+        log.info("betweenMINUTE/24:{}", NumberUtil.div(between, minute, 2));
+        //Level.MINUTE表示精确到分 完工时间
+        String formatBetween = DateUtil.formatBetween(between, BetweenFormater.Level.HOUR);
+        log.info("formatBetween:{}", formatBetween);
 
         //8.计时器
         /*TimeInterval timer = DateUtil.timer();
@@ -139,11 +143,11 @@ public class DateUtilTest {
         log.info("花费分钟数:{}", intervalMinute);*/
 
         //9.其它
-        int ageOfNow = DateUtil.ageOfNow("1990-09-27");
+       /* int ageOfNow = DateUtil.ageOfNow("1990-09-27");
         log.info("年龄:{}", ageOfNow);
         boolean isLeapYear = DateUtil.isLeapYear(2018);
         log.info("是否闰年:{}", isLeapYear);
         String secondToTime = DateUtil.secondToTime(123456);
-        log.info("秒转时间:{}", secondToTime);
+        log.info("秒转时间:{}", secondToTime);*/
     }
 }

@@ -1,11 +1,16 @@
 package com.bannad927.examples;
 
-import cn.hutool.core.img.Img;
+import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 /**
  * 图片工具
+ *
  * @author chengbb
  * @date 2020.6.19
  */
@@ -57,9 +62,18 @@ public class ImgUtilTest {
         //Img.from(FileUtil.file("d:/elastic.jpg")).cut(0, 0, 1000).write(FileUtil.file("d:/from_elastic.jpg"));
 
         //图片压缩
-        Img.from(FileUtil.file("d:/elastic.jpg"))
-                .setQuality(0.8)//压缩比率
-                .write(FileUtil.file("d:/elastic_target.jpg"));
+        //Img.from(FileUtil.file("E:\\dl\\a.png")).setQuality(0.8).write(FileUtil.file("E:\\dl\\a.png"));
+        File imgFile = new File("E:/dl/a.png");
+        BufferedImage bi = ImgUtil.read(imgFile);
+        int height = bi.getHeight();//4096*4096
+        int width = bi.getWidth();
+        if (height > 400 || width > 400) {
+            ImgUtil.scale(FileUtil.file("E:/dl/a.png"), FileUtil.file("E:/dl/a.png"), width / 4, height / 4, Color.WHITE);
+        }
+        long fl = imgFile.length();
+        if (fl > 3072000) {
+            ImgUtil.scale(FileUtil.file("E:/dl/a.png"), FileUtil.file("E:/dl/a2.png"), width / 2, height / 2, Color.WHITE);
+        }
 
     }
 }

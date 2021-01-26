@@ -13,7 +13,10 @@
         <module>sb-rabbitmq</module>
         <module>sb-hutool</module>
         <module>sb-sftp</module>
+        <module>sb-showdown</module>
         <module>sb-redis</module>
+        <module>sb-base</module>
+        <module>sb-activemq</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->

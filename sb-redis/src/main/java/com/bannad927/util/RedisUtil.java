@@ -1,15 +1,15 @@
 package com.bannad927.util;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisSentinelConnection;
 import org.springframework.data.redis.connection.RedisServer;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,6 +21,30 @@ public class RedisUtil {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    /**
+     * bitmap 的优势有两点：1.存储开销小， 2.统计总数快
+     * @param key
+     * @param value
+     * @param tage
+     * @return
+     */
+    public Boolean setBit(String key, long value, boolean tage) {
+        return stringRedisTemplate.opsForValue().setBit(key, value, tage);
+    }
+
+    public Boolean getBit(String key, long value) {
+        return stringRedisTemplate.opsForValue().getBit(key, value);
+    }
+
+    public long bitCount(String key) {
+        return stringRedisTemplate.execute(new RedisCallback<Long>() {
+            @Override
+            public Long doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                return redisConnection.bitCount(key.getBytes());
+            }
+        });
+    }
 
     /**
      * 指定缓存失效时间
@@ -41,6 +65,12 @@ public class RedisUtil {
         }
     }
 
+    public String sendMessage() {
+        for(int i = 1; i <= 5; i++) {
+            stringRedisTemplate.convertAndSend("channel:test", String.format("我是消息{%d}号: %tT", i, new Date()));
+        }
+        return "";
+    }
 
     /**
      * 设置key
